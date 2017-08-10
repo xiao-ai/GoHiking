@@ -1,0 +1,35 @@
+{
+  "name": "gohiking",
+  "version": "1.0.0",
+  "description": "web project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiao-ai/GoHiking.git"
+  },
+  "author": "Xiao Ai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xiao-ai/GoHiking/issues"
+  },
+  "homepage": "https://github.com/xiao-ai/GoHiking#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "cookies": "^0.7.0",
+    "express": "^4.15.2",
+    "express-session": "^1.15.4",
+    "jquery": "^3.2.1",
+    "mongoose": "^4.9.8",
+    "multer": "^1.3.0",
+    "passport": "^0.3.2",
+    "passport-google-oauth20": "^1.0.0",
+    "passport-local": "^1.0.0",
+    "q": "^1.5.0",
+    "sessions": "0.0.2-7"
+  }
+}
