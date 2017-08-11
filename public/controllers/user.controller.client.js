@@ -3,7 +3,8 @@
         .module("GoHiking")
         .controller("LoginController", LoginController)
         .controller("RegisterController", RegisterController)
-        .controller("ResetController", ResetController);
+        .controller("ResetController", ResetController)
+        .controller("ProfileController", ProfileController);
 
     function LoginController($routeParams, IndexService, $scope) {
         var vm = this;
@@ -18,5 +19,9 @@
     function ResetController() {
         var vm = this;
         console.log("reset");
+    }
+
+    function ProfileController($scope) {
+        console.log("profile");
     }
 })();

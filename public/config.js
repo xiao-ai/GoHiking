@@ -28,6 +28,11 @@
                 controller: "ResetController",
                 controllerAs: "model"
             })
+            .when('/profile', {
+                templateUrl: "views/user/profile.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model"
+            })
             .otherwise({
                 redirectTo: "/index"
             });
