@@ -6,9 +6,33 @@
         .controller("ResetController", ResetController)
         .controller("ProfileController", ProfileController);
 
-    function LoginController($routeParams, IndexService, $scope) {
+    function LoginController($location, UserService) {
         var vm = this;
-        console.log("login");
+        vm.login = login;
+
+        function login(username, password) {
+            if (username === "" || username == undefined || password === "" || password === undefined) {
+                vm.error = "username and password are required!";
+                return;
+            }
+
+            UserService
+                .login({
+                    username: username,
+                    password: password
+                })
+                .then(
+                    function (response) {
+                        if (response.data) {
+                            UserService.setCurrentUser(response.data);
+                            var user = response.data;
+                            $location.url("/profile");
+                        }
+                    },
+                    function (error) {
+                        vm.error = "username and password does not match!";
+                    });
+        }
     }
 
     function RegisterController($location, $timeout, UserService) {
@@ -56,7 +80,43 @@
         console.log("reset");
     }
 
-    function ProfileController($scope) {
-        console.log("profile");
+    function ProfileController($timeout, $location, UserService, $rootScope) {
+        var vm = this;
+        vm.logout = logout;
+
+        renderUser($rootScope.currentUser);
+
+        function renderUser(user) {
+            vm.user = user;
+            vm.updateUser = updateUser;
+            vm.deleteUser = deleteUser;
+        }
+
+        function updateUser(user) {
+            UserService
+                .updateUser(user._id, user)
+                .then(function () {
+                    vm.updated = "Profile changes saved!";
+                    $timeout(function () {
+                        vm.updated = null;
+                    }, 3000);
+                });
+        }
+
+        function deleteUser(user) {
+            UserService
+                .deleteUser(user._id)
+                .then(function () {
+                    $location.url("/");
+                });
+        }
+
+        function logout() {
+            UserService
+                .logout()
+                .then(function () {
+                    $location.url("/");
+                });
+        }
     }
 })();
