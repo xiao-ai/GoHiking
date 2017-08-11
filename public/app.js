@@ -4,9 +4,11 @@
     GoHiking.run(Settings);
 
 
-    function GoHikingController($scope, $rootScope) {
+    function GoHikingController($scope, $rootScope, $location) {
         $scope.$on('$viewContentLoaded', function () {
             App.initComponents(); // init core components
+            console.log($location.path());
+            $scope.currentPage = $location.path();
         });
     }
 

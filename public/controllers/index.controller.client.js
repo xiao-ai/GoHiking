@@ -3,7 +3,8 @@
         .module("GoHiking")
         .controller("IndexController", IndexController)
         .controller("HeaderController", HeaderController)
-        .controller("FooterController", FooterController);
+        .controller("FooterController", FooterController)
+        .controller("PageHeadController", PageHeadController);
 
     function IndexController($routeParams, IndexService, $scope) {
         var vm = this;
@@ -21,7 +22,13 @@
 
     function FooterController($scope) {
         $scope.$on('$includeContentLoaded', function() {
-            Layout.initFooter(); // init header
+            Layout.initFooter(); // init footer
+        });
+    }
+
+    function PageHeadController($scope) {
+        $scope.$on('$includeContentLoaded', function() {
+            Demo.init(); // init theme panel
         });
     }
 })();

@@ -13,6 +13,21 @@
                 controller: "IndexController",
                 controllerAs: "model"
             })
+            .when('/login', {
+                templateUrl: "views/user/login.view.client.html",
+                controller: "LoginController",
+                controllerAs: "model"
+            })
+            .when('/register', {
+                templateUrl: "views/user/register.view.client.html",
+                controller: "RegisterController",
+                controllerAs: "model"
+            })
+            .when('/reset', {
+                templateUrl: "views/user/reset.view.client.html",
+                controller: "ResetController",
+                controllerAs: "model"
+            })
             .otherwise({
                 redirectTo: "/index"
             });
