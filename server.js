@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// require ("./server/app.js")(app);
+require ("./server/app.js")(app);
 
 app.set('port', (process.env.PORT || 3000));
 app.use(express.static(__dirname + '/public'));
