@@ -16,7 +16,7 @@
                 <!-- BEGIN USER LOGIN DROPDOWN -->
                 <li ng-if="currentUser" class="dropdown dropdown-user dropdown-dark">
                     <a href="javascript:;" class="dropdown-toggle" dropdown-menu-hover data-toggle="dropdown" data-close-others="true">
-                        <img alt="" class="img-circle" ng-src="{{settings.layoutPath}}/img/avatar.png">
+                        <img alt="" class="img-circle" ng-src="{{currentUser.avatar}}">
                         <span class="username username-hide-mobile">{{currentUser.username}}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-default">
@@ -26,15 +26,17 @@
                         </li>
                         <li>
                             <a href="#/todo">
-                                <i class="icon-rocket"></i> My Tasks
-                                <span class="badge badge-success"> 7 </span>
+                                <i class="icon-users"></i> Followers
+                                <span class="badge badge-success"> {{currentUser.followers.length}} </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#/todo">
+                                <i class="icon-user-following"></i> Following
+                                <span class="badge badge-success"> {{currentUser.following.length}} </span>
                             </a>
                         </li>
                         <li class="divider"> </li>
-                        <li>
-                            <a href="#">
-                                <i class="icon-lock"></i> Lock Screen </a>
-                        </li>
                         <li>
                             <a ng-click="logout(model.user)">
                                 <i class="icon-key"></i> Log Out </a>

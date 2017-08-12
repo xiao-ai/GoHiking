@@ -49,24 +49,25 @@
                     <!-- END PERSONAL INFO TAB -->
                     <!-- CHANGE AVATAR TAB -->
                     <div class="tab-pane" id="tab_1_2">
-                        <form action="#"
-                              role="form">
+                        <form action="/api/upload" role="form" method="post" enctype="multipart/form-data">
+                            <div ng-show="model.uploaded" class="alert alert-success" role="alert">{{model.uploaded}}</div>
                             <div class="form-group">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
                                         <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+                                    <input name="userId" value="{{model.user._id}}" style="display: none"/>
                                     <div>
                                         <span class="btn default btn-file">
                                             <span class="fileinput-new"> Select image </span>
                                             <span class="fileinput-exists"> Change </span>
-                                            <input type="file" name="..."> </span>
+                                            <input type="file" name="myFile"> </span>
                                         <a href="#" class="btn default fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                     </div>
                                 </div>
                             </div>
                             <div class="margin-top-10">
-                                <a href="#" class="btn green-haze"> Submit </a>
+                                <button type="submit" class="btn green-haze"> Submit </button>
                                 <!--<a href="#" class="btn default"> Cancel </a>-->
                             </div>
                         </form>

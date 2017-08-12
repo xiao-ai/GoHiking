@@ -38,6 +38,34 @@ module.exports = function (app, model) {
             failureRedirect: '/#!/login'
         }));
 
+    // img upload
+    var multer = require('multer'); // npm install multer --save
+    var upload = multer({dest: __dirname + '/../../public/uploads'});
+    app.post("/api/upload", upload.single('myFile'), uploadImage);
+
+    function uploadImage(req, res) {
+        console.log("aaa");
+        var userId = req.body.userId;
+
+        var myFile = req.file;
+        if (myFile == null || myFile == undefined) {
+            return;
+        }
+
+        var filename = myFile.filename;     // new file name in upload folder
+        var url = '/uploads/' + filename;
+
+        model
+            .userModel
+            .findUserById(userId)
+            .then(function(user) {
+                user.avatar = url;
+                user.save();
+                var callbackUrl = "/#!/profile";
+                res.redirect(callbackUrl);
+            });
+    }
+
     function serializeUser(user, done) {
         done(null, user);
     }
@@ -222,7 +250,7 @@ module.exports = function (app, model) {
             .updateUser(uid, new_user)
             .then(
                 function (user) {
-                    res.json(user)
+                    res.json(user);
                 },
                 function (error) {
                     res.sendStatus(400).send(error);

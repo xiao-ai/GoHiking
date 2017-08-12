@@ -4,7 +4,8 @@
         .controller("LoginController", LoginController)
         .controller("RegisterController", RegisterController)
         .controller("ResetController", ResetController)
-        .controller("ProfileController", ProfileController);
+        .controller("ProfileController", ProfileController)
+        .controller("FollowController", FollowController);
 
     function LoginController($location, UserService) {
         var vm = this;
@@ -56,7 +57,8 @@
                 password: password,
                 email: email,
                 followers: [],
-                following: []
+                following: [],
+                avatar: "../assets/layouts/layout3/img/avatar.png"
             };
 
             UserService
@@ -140,5 +142,9 @@
                     $window.location.reload();
                 });
         }
+    }
+
+    function FollowController($timeout, $location, UserService, $rootScope, $window) {
+        console.log("follow");
     }
 })();
