@@ -3,7 +3,7 @@ module.exports = function(app){
     var mongoose = require('mongoose');
     var mongoDB = {
         local: 'mongodb://localhost/gohiking',
-        server: 'mongodb://aix:xihaxiao@ds139801.mlab.com:39801/heroku_8htvz1gn'
+        server: 'mongodb://admin:admin@ds151242.mlab.com:51242/heroku_56lb72zw'
     };
 
     if (process.env.MONGODB_URI) {
