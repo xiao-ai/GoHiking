@@ -25,8 +25,9 @@
                     function (response) {
                         if (response.data) {
                             UserService.setCurrentUser(response.data);
-                            var user = response.data;
                             $location.url("/profile");
+                        } else {
+                            vm.error = "user does not exists!";
                         }
                     },
                     function (error) {
@@ -80,19 +81,19 @@
         console.log("reset");
     }
 
-    function ProfileController($timeout, $location, UserService, $rootScope) {
+    function ProfileController($timeout, $location, UserService, $rootScope, $window) {
         var vm = this;
         $rootScope.logout = logout;
         renderUser($rootScope.currentUser);
 
         function renderUser(user) {
-            console.log(user);
             vm.user = user;
-            vm.updateUser = updateUser;
+            vm.updateProfile = updateProfile;
             vm.deleteUser = deleteUser;
         }
 
-        function updateUser(user) {
+        function updateProfile(user) {
+            // console.log(user);
             UserService
                 .updateUser(user._id, user)
                 .then(function () {
@@ -115,7 +116,7 @@
             UserService
                 .logout()
                 .then(function () {
-                    $location.url("/");
+                    $window.location.reload();
                 });
         }
     }

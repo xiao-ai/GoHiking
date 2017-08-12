@@ -9,7 +9,7 @@
     </div>
     <!-- END PAGE TITLE -->
     <!-- BEGIN PAGE TOOLBAR -->
-    <div class="page-toolbar">
+    <div ng-if="currentUser && currentUser.roles.indexOf('ADMIN') > -1" class="page-toolbar">
         <!-- BEGIN THEME PANEL -->
         <div class="btn-group btn-theme-panel">
             <a href="javascript:;" class="btn dropdown-toggle" data-toggle="dropdown">

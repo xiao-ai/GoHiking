@@ -20,7 +20,7 @@ module.exports = function (mongoose) {
     // Function Definition Section
 
     function createUser(user) {
-        user.roles = ['USER'];
+        user.roles = ['USER', 'ADMIN'];
         return userModel.create(user);
     }
 
@@ -46,7 +46,10 @@ module.exports = function (mongoose) {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            phone: user.phone
+            avatar: user.avatar,
+            about: user.about,
+            followers: user.followers,
+            following: user.following
         });
     }
 

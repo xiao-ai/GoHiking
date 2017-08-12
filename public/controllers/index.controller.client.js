@@ -8,7 +8,6 @@
 
     function IndexController($routeParams, IndexService, $rootScope, $scope) {
         var vm = this;
-        console.log("index");
 
         $scope.$on('$viewContentLoaded', function () {
             App.initComponents(); // init core components

@@ -12,6 +12,7 @@ module.exports = function (mongoose) {
         firstName: String,
         lastName: String,
         avatar: String,
+        about: String,
         email: {
             type: String,
             unique: true
