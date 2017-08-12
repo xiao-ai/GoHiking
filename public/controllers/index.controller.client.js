@@ -6,12 +6,21 @@
         .controller("FooterController", FooterController)
         .controller("PageHeadController", PageHeadController);
 
-    function IndexController($routeParams, IndexService, $rootScope, $scope) {
+    function IndexController($routeParams, IndexService, UserService, $rootScope, $scope, $window) {
         var vm = this;
+        $rootScope.logout = logout;
 
         $scope.$on('$viewContentLoaded', function () {
             App.initComponents(); // init core components
         });
+
+        function logout() {
+            UserService
+                .logout()
+                .then(function () {
+                    $window.location.reload();
+                });
+        }
     }
 
     function HeaderController($scope) {

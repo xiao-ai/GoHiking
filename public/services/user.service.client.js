@@ -14,7 +14,10 @@
             "deleteUser": deleteUser,
             "login": login,
             "logout": logout,
-            "setCurrentUser": setCurrentUser
+            "setCurrentUser": setCurrentUser,
+            "fuzzySearch": fuzzySearch,
+            "followUser": followUser,
+            "unFollowUser": unFollowUser
         };
 
         return services;
@@ -66,5 +69,21 @@
             var url = "/api/user/" + userId;
             return $http.delete(url);
         }
+
+        function fuzzySearch(text) {
+            var url = "/api/user/fuzzySearch/" + text;
+            return $http.get(url);
+        }
+
+        function followUser(userId, followId) {
+            var url = "/api/user/" + userId + "/follow/" + followId;
+            return $http.put(url);
+        }
+
+        function unFollowUser(userId, unFollowId) {
+            var url = "/api/user/" + userId + "/unfollow/" + unFollowId;
+            return $http.put(url);
+        }
+
     }
 })();

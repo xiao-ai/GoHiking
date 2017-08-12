@@ -34,9 +34,9 @@
                 controllerAs: "model",
                 resolve: {loggedin: checkLoggedin}
             })
-            .when('/follow', {
-                templateUrl: "views/user/follow.view.client.html",
-                controller: "FollowController",
+            .when('/search/:text', {
+                templateUrl: "views/user/search.view.client.html",
+                controller: "SearchUserController",
                 controllerAs: "model",
                 resolve: {loggedin: checkLoggedin}
             })

@@ -12,7 +12,10 @@ module.exports = function (mongoose) {
         'deleteWebsite': deleteWebsite,
         'removeWebsiteFromUser': removeWebsiteFromUser,
         'deleteUser': deleteUser,
-        'findUserByGoogleId': findUserByGoogleId
+        'findUserByGoogleId': findUserByGoogleId,
+        'fuzzySearch': fuzzySearch,
+        'followUser': followUser,
+        'unFollowUser': unFollowUser
     };
 
     return api;
@@ -85,6 +88,51 @@ module.exports = function (mongoose) {
 
     function findUserByGoogleId(googleId) {
         return userModel.findOne({'google.id': googleId});
+    }
+
+    function fuzzySearch(text) {
+        return userModel.find({
+            $or: [
+                {username: {$regex: text}},
+                {fistName: {$regex: text}},
+                {lastName: {$regex: text}},
+                {email: {$regex: text}}
+            ]
+        });
+    }
+
+    function followUser(userId, followId) {
+        return userModel
+            .findById(userId)
+            .then(function (user) {
+                user.following.push(followId);
+                return user.save();
+            })
+            .then(function (user) {
+                return userModel
+                    .findById(followId)
+                    .then(function (followedUser) {
+                        followedUser.followers.push(userId);
+                        return followedUser.save();
+                    });
+            });
+    }
+
+    function unFollowUser(userId, unFollowId) {
+        return userModel
+            .findById(userId)
+            .then(function (user) {
+                user.following.pull(unFollowId);
+                return user.save();
+            })
+            .then(function (user) {
+                return userModel
+                    .findById(unFollowId)
+                    .then(function (unFollowedUser) {
+                        unFollowedUser.followers.pull(userId);
+                        return unFollowedUser.save();
+                    });
+            });
     }
 
 };

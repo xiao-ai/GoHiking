@@ -5,7 +5,7 @@
         .controller("RegisterController", RegisterController)
         .controller("ResetController", ResetController)
         .controller("ProfileController", ProfileController)
-        .controller("FollowController", FollowController);
+        .controller("SearchUserController", SearchUserController);
 
     function LoginController($location, UserService) {
         var vm = this;
@@ -144,7 +144,48 @@
         }
     }
 
-    function FollowController($timeout, $location, UserService, $rootScope, $window) {
-        console.log("follow");
+    function SearchUserController($routeParams, $timeout, $location, UserService, $scope, $rootScope, $route) {
+        var vm = this;
+        vm.search = search;
+        vm.follow = follow;
+        vm.unFollow = unFollow;
+
+        var urlText = $routeParams.text;
+
+        if (urlText != 'null') {
+            search(urlText);
+        }
+
+        function search(text) {
+            vm.text = text;
+            UserService
+                .fuzzySearch(text)
+                .then(function (response) {
+                    vm.users = response.data;
+                    return;
+                });
+        }
+
+        function follow(followId) {
+            var user = $rootScope.currentUser;
+
+            UserService
+                .followUser(user._id, followId)
+                .then(function () {
+                    $location.url('/search/' + vm.text);
+                    $route.reload();
+                });
+        }
+
+        function unFollow(unFollowId) {
+            var user = $rootScope.currentUser;
+
+            UserService
+                .unFollowUser(user._id, unFollowId)
+                .then(function () {
+                    $location.url('/search/' + vm.text);
+                    $route.reload();
+                });
+        }
     }
 })();

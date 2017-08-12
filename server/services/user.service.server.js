@@ -19,6 +19,9 @@ module.exports = function (app, model) {
     app.post('/api/user', createUser);
     app.put('/api/user/:uid', updateUser);
     app.delete('/api/user/:uid', deleteUser);
+    app.get('/api/user/fuzzySearch/:text', fuzzySearch);
+    app.put('/api/user/:userId/follow/:followId', followUser);
+    app.put('/api/user/:userId/unfollow/:unFollowId', unFollowUser);
 
     // Passport config
     app.post('/api/login', passport.authenticate('LocalStrategy'), login);
@@ -58,7 +61,7 @@ module.exports = function (app, model) {
         model
             .userModel
             .findUserById(userId)
-            .then(function(user) {
+            .then(function (user) {
                 user.avatar = url;
                 user.save();
                 var callbackUrl = "/#!/profile";
@@ -277,5 +280,39 @@ module.exports = function (app, model) {
             // Precondition Failed. Precondition is that the user exists.
             res.sendStatus(412);
         }
+    }
+
+    function fuzzySearch(req, res) {
+        var text = req.params.text;
+        model
+            .userModel
+            .fuzzySearch(text)
+            .then(function (users) {
+                res.send(users);
+            });
+    }
+
+    function followUser(req, res) {
+        var userId = req.params.userId;
+        var followId = req.params.followId;
+
+        model
+            .userModel
+            .followUser(userId, followId)
+            .then(function (user) {
+                res.send(user);
+            })
+    }
+
+    function unFollowUser(req, res) {
+        var userId = req.params.userId;
+        var unFollowId = req.params.unFollowId;
+
+        model
+            .userModel
+            .unFollowUser(userId, unFollowId)
+            .then(function (user) {
+                res.send(user);
+            })
     }
 };
