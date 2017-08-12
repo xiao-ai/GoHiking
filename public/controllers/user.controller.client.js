@@ -89,11 +89,12 @@
         function renderUser(user) {
             vm.user = user;
             vm.updateProfile = updateProfile;
+            vm.updatePassword = updatePassword;
             vm.deleteUser = deleteUser;
         }
 
         function updateProfile(user) {
-            // console.log(user);
+            console.log(user);
             UserService
                 .updateUser(user._id, user)
                 .then(function () {
@@ -102,6 +103,26 @@
                         vm.updated = null;
                     }, 3000);
                 });
+        }
+
+        function updatePassword(user, password, rpassword) {
+            if (password !== rpassword) {
+                vm.error = "password does not match!";
+                $timeout(function () {
+                    vm.error = null;
+                    return;
+                }, 3000);
+            }
+
+            UserService
+                .updateUser(user._id, {password: password})
+                .then(function () {
+                    vm.updated = "Password changes saved!";
+                    $timeout(function () {
+                        vm.updated = null;
+                    }, 3000);
+                });
+
         }
 
         function deleteUser(user) {
