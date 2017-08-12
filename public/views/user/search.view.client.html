@@ -1,12 +1,13 @@
-<div class="row">
-    <div class="col-xs-12">
-        <div class="input-group">
-
-            <input type="text" class="form-control" placeholder="Search Users" ng-model="model.username">
-            <span class="input-group-btn">
+<div ng-if="model.type == 'search'">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search Users" ng-model="model.username">
+                <span class="input-group-btn">
                 <button class="btn btn-default" ng-click="model.search(model.username)">Search</button>
             </span>
-        </div><!-- /input-group -->
+            </div><!-- /input-group -->
+        </div>
     </div>
 </div>
 

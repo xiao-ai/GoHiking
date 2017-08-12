@@ -17,7 +17,9 @@
             "setCurrentUser": setCurrentUser,
             "fuzzySearch": fuzzySearch,
             "followUser": followUser,
-            "unFollowUser": unFollowUser
+            "unFollowUser": unFollowUser,
+            "findFollowingForUser": findFollowingForUser,
+            "findFollowersForUser": findFollowersForUser
         };
 
         return services;
@@ -83,6 +85,16 @@
         function unFollowUser(userId, unFollowId) {
             var url = "/api/user/" + userId + "/unfollow/" + unFollowId;
             return $http.put(url);
+        }
+
+        function findFollowingForUser(userId) {
+            var url = "/api/user/" + userId + "/following";
+            return $http.get(url);
+        }
+
+        function findFollowersForUser(userId) {
+            var url = "/api/user/" + userId + "/followers";
+            return $http.get(url);
         }
 
     }

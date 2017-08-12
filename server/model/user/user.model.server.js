@@ -15,7 +15,9 @@ module.exports = function (mongoose) {
         'findUserByGoogleId': findUserByGoogleId,
         'fuzzySearch': fuzzySearch,
         'followUser': followUser,
-        'unFollowUser': unFollowUser
+        'unFollowUser': unFollowUser,
+        'findFollowingForUser': findFollowingForUser,
+        'findFollowersForUser': findFollowersForUser
     };
 
     return api;
@@ -132,6 +134,24 @@ module.exports = function (mongoose) {
                         unFollowedUser.followers.pull(userId);
                         return unFollowedUser.save();
                     });
+            });
+    }
+
+    function findFollowingForUser(userId) {
+        return userModel
+            .findById(userId)
+            .populate('following')
+            .then(function (user) {
+               return user.following;
+            });
+    }
+
+    function findFollowersForUser(userId) {
+        return userModel
+            .findById(userId)
+            .populate('followers')
+            .then(function (user) {
+                return user.followers;
             });
     }
 

@@ -5,7 +5,9 @@
         .controller("RegisterController", RegisterController)
         .controller("ResetController", ResetController)
         .controller("ProfileController", ProfileController)
-        .controller("SearchUserController", SearchUserController);
+        .controller("SearchUserController", SearchUserController)
+        .controller("FollowingController", FollowingController)
+        .controller("FollowersController", FollowersController);
 
     function LoginController($location, UserService) {
         var vm = this;
@@ -149,6 +151,7 @@
         vm.search = search;
         vm.follow = follow;
         vm.unFollow = unFollow;
+        vm.type = 'search';
 
         var urlText = $routeParams.text;
 
@@ -184,6 +187,76 @@
                 .unFollowUser(user._id, unFollowId)
                 .then(function () {
                     $location.url('/search/' + vm.text);
+                    $route.reload();
+                });
+        }
+    }
+
+    function FollowingController(UserService, $rootScope) {
+        var vm = this;
+        var user = $rootScope.currentUser;
+        vm.follow = follow;
+        vm.unFollow = unFollow;
+
+        UserService
+            .findFollowingForUser(user._id)
+            .then(function (res) {
+               vm.users = res.data;
+            });
+
+        function follow(followId) {
+            var user = $rootScope.currentUser;
+
+            UserService
+                .followUser(user._id, followId)
+                .then(function () {
+                    $location.url('/search/' + vm.text);
+                    $route.reload();
+                });
+        }
+
+        function unFollow(unFollowId) {
+            var user = $rootScope.currentUser;
+
+            UserService
+                .unFollowUser(user._id, unFollowId)
+                .then(function () {
+                    $location.url('/search/' + vm.text);
+                    $route.reload();
+                });
+        }
+    }
+
+    function FollowersController(UserService, $rootScope, $location, $route) {
+        var vm = this;
+        var user = $rootScope.currentUser;
+        vm.follow = follow;
+        vm.unFollow = unFollow;
+
+        UserService
+            .findFollowersForUser(user._id)
+            .then(function (res) {
+                vm.users = res.data;
+            });
+
+        function follow(followId) {
+            var user = $rootScope.currentUser;
+
+            UserService
+                .followUser(user._id, followId)
+                .then(function () {
+                    // $location.url('/search/' + vm.text);
+                    $route.reload();
+                });
+        }
+
+        function unFollow(unFollowId) {
+            var user = $rootScope.currentUser;
+
+            UserService
+                .unFollowUser(user._id, unFollowId)
+                .then(function () {
+                    // $location.url('/search/' + vm.text);
                     $route.reload();
                 });
         }

@@ -40,6 +40,18 @@
                 controllerAs: "model",
                 resolve: {loggedin: checkLoggedin}
             })
+            .when('/following', {
+                templateUrl: "views/user/search.view.client.html",
+                controller: "FollowingController",
+                controllerAs: "model",
+                resolve: {loggedin: checkLoggedin}
+            })
+            .when('/followers', {
+                templateUrl: "views/user/search.view.client.html",
+                controller: "FollowersController",
+                controllerAs: "model",
+                resolve: {loggedin: checkLoggedin}
+            })
             .otherwise({
                 redirectTo: "/index"
             });

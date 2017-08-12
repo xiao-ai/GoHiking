@@ -22,6 +22,8 @@ module.exports = function (app, model) {
     app.get('/api/user/fuzzySearch/:text', fuzzySearch);
     app.put('/api/user/:userId/follow/:followId', followUser);
     app.put('/api/user/:userId/unfollow/:unFollowId', unFollowUser);
+    app.get('/api/user/:userId/following', findFollowingForUser);
+    app.get('/api/user/:userId/followers', findFollowersForUser);
 
     // Passport config
     app.post('/api/login', passport.authenticate('LocalStrategy'), login);
@@ -301,7 +303,7 @@ module.exports = function (app, model) {
             .followUser(userId, followId)
             .then(function (user) {
                 res.send(user);
-            })
+            });
     }
 
     function unFollowUser(req, res) {
@@ -313,6 +315,26 @@ module.exports = function (app, model) {
             .unFollowUser(userId, unFollowId)
             .then(function (user) {
                 res.send(user);
-            })
+            });
+    }
+
+    function findFollowingForUser(req, res) {
+        var userId = req.params.userId;
+        model
+            .userModel
+            .findFollowingForUser(userId)
+            .then(function (users) {
+                res.send(users);
+            });
+    }
+
+    function findFollowersForUser(req, res) {
+        var userId = req.params.userId;
+        model
+            .userModel
+            .findFollowersForUser(userId)
+            .then(function (users) {
+                res.send(users);
+            });
     }
 };
