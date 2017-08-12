@@ -82,11 +82,11 @@
 
     function ProfileController($timeout, $location, UserService, $rootScope) {
         var vm = this;
-        vm.logout = logout;
-
+        $rootScope.logout = logout;
         renderUser($rootScope.currentUser);
 
         function renderUser(user) {
+            console.log(user);
             vm.user = user;
             vm.updateUser = updateUser;
             vm.deleteUser = deleteUser;

@@ -34,8 +34,8 @@ module.exports = function (app, model) {
     app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
     app.get('/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect: '/assignment/#!/profile',
-            failureRedirect: '/assignment/#!/login'
+            successRedirect: '/#!/profile',
+            failureRedirect: '/#!/login'
         }));
 
     function serializeUser(user, done) {
@@ -90,7 +90,6 @@ module.exports = function (app, model) {
                     }
                 },
                 function (error) {
-                    console.log("server error");
                     return res.status(400).send(error);
                 });
     }

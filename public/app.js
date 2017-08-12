@@ -2,6 +2,18 @@
     var GoHiking = angular.module("GoHiking", ['ngRoute']);
     GoHiking.controller("GoHikingController", GoHikingController);
     GoHiking.run(Settings);
+    // GoHiking.run(function ($rootScope) {
+    //     $rootScope.logout = logout;
+    //
+    //
+    //     function logout() {
+    //         UserService
+    //             .logout()
+    //             .then(function () {
+    //                 $location.url("/");
+    //             });
+    //     }
+    // });
 
 
     function GoHikingController($scope, $rootScope, $location) {

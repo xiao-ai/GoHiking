@@ -31,7 +31,8 @@
             .when('/profile', {
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {loggedin: checkLoggedin}
             })
             .otherwise({
                 redirectTo: "/index"
@@ -56,7 +57,7 @@
             } else {
                 $rootScope.error = "You need to log in.";
                 deferred.reject();
-                $location.url('/login');
+                $location.url('/index');
             }
         });
         return deferred.promise;

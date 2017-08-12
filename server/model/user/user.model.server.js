@@ -89,7 +89,6 @@ module.exports = function (mongoose) {
     }
 
     function findUserByGoogleId(googleId) {
-        console.log(googleId);
         return userModel.findOne({'google.id': googleId});
     }
 
