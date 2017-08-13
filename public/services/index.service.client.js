@@ -4,7 +4,7 @@
         .factory("IndexService", IndexService);
 
     var key = "e55af6a71db15349e0eff7663ed2dbfce8657bf6f82c836a36858e6e9ef90230";
-    var trails_url = "https://api.transitandtrails.org/api/v1/trailheads?key=" + key;
+    var trails_url = "https://api.transitandtrails.org/api/v1/";
 
     function IndexService($http) {
         var services = {
@@ -13,7 +13,7 @@
         return services;
 
         function searchTrailsNear(lng, lat) {
-            var url = trails_url  + "&distance=50&longitude=" + lng + "&latitude=" + lat;
+            var url = trails_url + "trailheads?" + "distance=30&longitude=" + lng + "&latitude=" + lat + "&key=" + key;
             return $http.get(url);
         }
     }

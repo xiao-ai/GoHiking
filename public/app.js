@@ -1,5 +1,5 @@
 (function () {
-    var GoHiking = angular.module("GoHiking", ['ngRoute', 'google.places']);
+    var GoHiking = angular.module("GoHiking", ['ngRoute', 'google.places', 'uiGmapgoogle-maps']);
     GoHiking.controller("GoHikingController", GoHikingController);
     GoHiking.run(Settings);
 

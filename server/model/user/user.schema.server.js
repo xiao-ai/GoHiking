@@ -38,7 +38,10 @@ module.exports = function (mongoose) {
         dateCreated: {
             type: Date,
             default: Date.now
-        }
+        },
+        favoriteTrails: [{
+            type: Number
+        }]
 
     }, {collection: 'user'});
 

@@ -52,6 +52,11 @@
                 controllerAs: "model",
                 resolve: {loggedin: checkLoggedin}
             })
+            .when('/trail/:trailId/lng/:lng/lat/:lat', {
+                templateUrl: "views/index/trail.view.client.html",
+                controller: "TrailController",
+                controllerAs: "model"
+            })
             .otherwise({
                 redirectTo: "/index"
             });
@@ -64,7 +69,7 @@
         ]);
     }
 
-    var checkLoggedin = function ($q, $timeout, $http, $location, $rootScope) {
+    var checkLoggedin = function ($q, $timeout, $http, $location, $rootScope, $window) {
         var deferred = $q.defer();
 
         $http.get('/api/loggedin').then(function (res) {
@@ -74,9 +79,11 @@
                 $rootScope.currentUser = user;
                 deferred.resolve();
             } else {
-                $rootScope.error = "You need to log in.";
-                deferred.reject();
-                $location.url('/index');
+                $window.alert("You need to log in. Redirecting to login page in 3 seconds");
+                $timeout(function () {
+                    deferred.reject();
+                    $location.url('/login');
+                }, 2000);
             }
         });
         return deferred.promise;

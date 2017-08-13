@@ -60,6 +60,7 @@
                 email: email,
                 followers: [],
                 following: [],
+                favoriteTrails: [],
                 avatar: "../assets/layouts/layout3/img/avatar.png"
             };
 
@@ -244,7 +245,6 @@
             UserService
                 .followUser(user._id, followId)
                 .then(function () {
-                    // $location.url('/search/' + vm.text);
                     $route.reload();
                 });
         }
@@ -255,7 +255,6 @@
             UserService
                 .unFollowUser(user._id, unFollowId)
                 .then(function () {
-                    // $location.url('/search/' + vm.text);
                     $route.reload();
                 });
         }

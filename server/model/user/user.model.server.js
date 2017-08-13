@@ -17,7 +17,9 @@ module.exports = function (mongoose) {
         'followUser': followUser,
         'unFollowUser': unFollowUser,
         'findFollowingForUser': findFollowingForUser,
-        'findFollowersForUser': findFollowersForUser
+        'findFollowersForUser': findFollowersForUser,
+        'addFavoriteTrail': addFavoriteTrail,
+        'removeFavoriteTrail': removeFavoriteTrail
     };
 
     return api;
@@ -152,6 +154,24 @@ module.exports = function (mongoose) {
             .populate('followers')
             .then(function (user) {
                 return user.followers;
+            });
+    }
+
+    function addFavoriteTrail(userId, trailId) {
+        return userModel
+            .findById(userId)
+            .then(function (user) {
+                user.favoriteTrails.push(trailId);
+                return user.save();
+            });
+    }
+
+    function removeFavoriteTrail(userId, trailId) {
+        return userModel
+            .findById(userId)
+            .then(function (user) {
+                user.favoriteTrails.pull(trailId);
+                return user.save();
             });
     }
 
