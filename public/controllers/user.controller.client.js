@@ -98,7 +98,6 @@
         }
 
         function updateProfile(user) {
-            console.log(user);
             UserService
                 .updateUser(user._id, user)
                 .then(function () {

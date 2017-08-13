@@ -21,23 +21,63 @@
                     $window.location.reload();
                 });
         }
+
+        $scope.$on('g-places-autocomplete:select', function (event, data) {
+            console.log('Event', event);
+            console.log('Place data', data);
+            console.log('Geometry', data.geometry.location.lat(), data.geometry.location.lng());
+            var lat = data.geometry.location.lat();
+            var lng = data.geometry.location.lng();
+
+            IndexService
+                .searchTrailsNear(lng, lat)
+                .then(function (trails) {
+
+                   vm.trails = trails;
+                   console.log(trails);
+                });
+        });
     }
 
-    function HeaderController($scope) {
+    function HeaderController($rootScope, $scope) {
+        $rootScope.logout = logout;
         $scope.$on('$includeContentLoaded', function () {
             Layout.initHeader(); // init header
         });
+        function logout() {
+            UserService
+                .logout()
+                .then(function () {
+                    $window.location.reload();
+                });
+        }
     }
 
-    function FooterController($scope) {
+    function FooterController($rootScope, $scope) {
+        $rootScope.logout = logout;
         $scope.$on('$includeContentLoaded', function () {
             Layout.initFooter(); // init footer
         });
+        function logout() {
+            UserService
+                .logout()
+                .then(function () {
+                    $window.location.reload();
+                });
+        }
     }
 
-    function PageHeadController($scope) {
+    function PageHeadController($rootScope, $scope) {
+        $rootScope.logout = logout;
         $scope.$on('$includeContentLoaded', function () {
             Demo.init(); // init theme panel
         });
+        function logout() {
+            UserService
+                .logout()
+                .then(function () {
+                    $window.location.reload();
+                });
+        }
     }
 })();

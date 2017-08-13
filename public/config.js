@@ -59,7 +59,8 @@
         // allow youtube through
         $sceDelegateProvider.resourceUrlWhitelist([
             'self',
-            '*://www.youtube.com/**'
+            '*://www.youtube.com/**',
+            '**api.transitandtrails.org/**'
         ]);
     }
 
