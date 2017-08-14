@@ -7,7 +7,8 @@
         .controller("ProfileController", ProfileController)
         .controller("SearchUserController", SearchUserController)
         .controller("FollowingController", FollowingController)
-        .controller("FollowersController", FollowersController);
+        .controller("FollowersController", FollowersController)
+        .controller("UserController", UserController);
 
     function LoginController($location, UserService) {
         var vm = this;
@@ -141,7 +142,8 @@
             UserService
                 .logout()
                 .then(function () {
-                    $location.url('/trail');
+                    $location.url('/index');
+                    $window.location.reload();
                 });
         }
     }
@@ -258,5 +260,10 @@
                     $route.reload();
                 });
         }
+    }
+
+    function UserController(UserService, $rootScope, $location, $route) {
+        var vm = this;
+        console.log("user managament");
     }
 })();

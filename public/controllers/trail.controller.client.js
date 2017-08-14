@@ -59,7 +59,8 @@
             UserService
                 .logout()
                 .then(function () {
-                    $location.url('/trail');
+                    $location.url('/index');
+                    $window.location.reload();
                 });
         }
 

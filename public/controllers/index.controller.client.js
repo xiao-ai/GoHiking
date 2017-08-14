@@ -6,7 +6,7 @@
         .controller("FooterController", FooterController)
         .controller("PageHeadController", PageHeadController);
 
-    function IndexController(UserService, $rootScope, $scope) {
+    function IndexController(UserService, $rootScope, $scope, $window) {
         var vm = this;
         $rootScope.logout = logout;
 
@@ -18,12 +18,13 @@
             UserService
                 .logout()
                 .then(function () {
-                    $location.url('/trail');
+                    $location.url('/index');
+                    $window.location.reload();
                 });
         }
     }
 
-    function HeaderController($rootScope, $scope) {
+    function HeaderController($rootScope, $scope, $window) {
         $rootScope.logout = logout;
         $scope.$on('$includeContentLoaded', function () {
             Layout.initHeader(); // init header
@@ -33,7 +34,8 @@
             UserService
                 .logout()
                 .then(function () {
-                    $location.url('/trail');
+                    $location.url('/index');
+                    $window.location.reload();
                 });
         }
     }

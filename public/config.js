@@ -62,6 +62,12 @@
                 controller: "TrailController",
                 controllerAs: "model"
             })
+            .when('/user', {
+                templateUrl: "views/user/user.view.client.html",
+                controller: "UserController",
+                controllerAs: "model",
+                resolve: {loggedin: checkAdmin}
+            })
             .otherwise({
                 redirectTo: "/index"
             });
@@ -79,10 +85,9 @@
 
         $http.get('/api/loggedin').then(function (res) {
             var user = res.data;
-            $rootScope.errorMessage = null;
             if (user !== '0') {
                 $rootScope.currentUser = user;
-                deferred.resolve();
+                deferred.resolve(user);
             } else {
                 $window.alert("You need to log in. Redirecting to login page in 3 seconds");
                 $timeout(function () {
@@ -93,4 +98,20 @@
         });
         return deferred.promise;
     };
+
+    var checkAdmin = function ($q, $timeout, $http, $location, $rootScope, $window) {
+        var deferred = $q.defer();
+
+        $http.get('/api/checkAdmin').then(function (res) {
+            var user = res.data;
+            if (user !== '0') {
+                deferred.resolve(user);
+            } else {
+                $location.url('/index');
+            }
+        });
+        return deferred.promise;
+    };
+
+
 })();

@@ -32,6 +32,7 @@ module.exports = function (app, model) {
     app.post('/api/logout', logout);
     app.post('/api/register', regitser);
     app.get('/api/loggedin', loggedin);
+    app.get('/api/checkAdmin', checkAdmin);
 
     passport.use('LocalStrategy', new LocalStrategy(localStrategy));
     passport.use(new GoogleStrategy(googleConfig, googleStrategy));
@@ -183,6 +184,14 @@ module.exports = function (app, model) {
 
     function loggedin(req, res) {
         res.send(req.isAuthenticated() ? req.user : '0');
+    }
+
+    function checkAdmin(req, res) {
+        if (req.isAuthenticated() && req.user.roles.indexOf('ADMIN') > -1) {
+            res.json(req.user);
+        } else {
+            res.json('0');
+        }
     }
 
     /*API implementation*/

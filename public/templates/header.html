@@ -15,7 +15,8 @@
             <ul class="nav navbar-nav pull-right">
                 <!-- BEGIN USER LOGIN DROPDOWN -->
                 <li ng-if="currentUser" class="dropdown dropdown-user dropdown-dark">
-                    <a href="javascript:;" class="dropdown-toggle" dropdown-menu-hover data-toggle="dropdown" data-close-others="true">
+                    <a href="javascript:;" class="dropdown-toggle" dropdown-menu-hover data-toggle="dropdown"
+                       data-close-others="true">
                         <img alt="" class="img-circle" ng-src="{{currentUser.avatar}}">
                         <span class="username username-hide-mobile">{{currentUser.username}}</span>
                     </a>
@@ -41,7 +42,7 @@
                                 <span class="badge badge-success"> {{currentUser.following.length}} </span>
                             </a>
                         </li>
-                        <li class="divider"> </li>
+                        <li class="divider"></li>
                         <li>
                             <a ng-click="logout(model.user)">
                                 <i class="icon-key"></i> Log Out </a>
@@ -73,6 +74,9 @@
                 </li>
                 <li>
                     <a href="#!/trail">Trails</a>
+                </li>
+                <li ng-if="currentUser && currentUser.roles.indexOf('ADMIN') > -1">
+                    <a href="#!/user">Users</a>
                 </li>
             </ul>
         </div>

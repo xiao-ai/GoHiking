@@ -83,8 +83,10 @@
         <div class="page-wrapper-middle">
             <!-- BEGIN CONTAINER -->
             <div class="page-container">
+                <div ng-if="currentUser && currentUser.roles.indexOf('ADMIN') > -1">
                 <div data-ng-include="'templates/page-head.html'" data-ng-controller="PageHeadController"
                      class="page-head"></div>
+                </div>
                 <div class="page-content">
                     <div class="container">
                         <div ng-view class="fade-in-up"></div>
