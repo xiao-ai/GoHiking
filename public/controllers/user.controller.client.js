@@ -141,7 +141,7 @@
             UserService
                 .logout()
                 .then(function () {
-                    $window.location.reload();
+                    $location.url('/trail');
                 });
         }
     }

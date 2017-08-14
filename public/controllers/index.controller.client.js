@@ -6,7 +6,7 @@
         .controller("FooterController", FooterController)
         .controller("PageHeadController", PageHeadController);
 
-    function IndexController(UserService, $rootScope, $scope, $window) {
+    function IndexController(UserService, $rootScope, $scope) {
         var vm = this;
         $rootScope.logout = logout;
 
@@ -18,7 +18,7 @@
             UserService
                 .logout()
                 .then(function () {
-                    $window.location.reload();
+                    $location.url('/trail');
                 });
         }
     }
@@ -33,7 +33,7 @@
             UserService
                 .logout()
                 .then(function () {
-                    $location.url('/index');
+                    $location.url('/trail');
                 });
         }
     }
