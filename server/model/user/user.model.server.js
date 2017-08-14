@@ -28,7 +28,7 @@ module.exports = function (mongoose) {
     // Function Definition Section
 
     function createUser(user) {
-        user.roles = ['USER', "ADMIN"];
+        user.roles = ['USER'];
         return userModel.create(user);
     }
 
