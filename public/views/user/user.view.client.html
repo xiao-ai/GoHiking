@@ -51,8 +51,10 @@
 
                         </td>
                         <td>
-                            <!--<a href="javascript:;" class="btn btn-outline btn-circle btn-sm purple">-->
-                                <!--<i class="fa fa-edit"></i> Edit </a>-->
+                            <a ng-click="model.findUserById(user._id)"
+                               class="btn btn-outline btn-circle btn-sm purple"
+                               data-toggle="modal">
+                                <i class="fa fa-edit"></i> Edit </a>
                             <a ng-if="user.roles.indexOf('ADMIN') < 0 && user.status == 'ACTIVE'"
                                class="btn btn-outline btn-circle dark btn-sm black"
                                ng-click="model.disableUser(user._id)">
@@ -60,7 +62,6 @@
 
                             <a ng-if="user.roles.indexOf('ADMIN') < 0 && user.status == 'INACTIVE'"
                                class="btn btn-outline btn-circle dark btn-sm black"
-                               ng-click="model.disableUser(user._id)"
                                ng-click="model.enableUser(user._id)">
                                 <i class="fa fa-unlock"></i> Enable </a>
                         </td>
@@ -70,6 +71,63 @@
                     </tr>
                     </tbody>
                 </table>
+                <!-- Modal -->
+                <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Edit User</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label class="control-label">Username</label>
+                                        <input placeholder="John" class="form-control"
+                                               ng-model="model.user.username" disabled/></div>
+                                    <div class="form-group">
+                                        <label class="control-label">Email</label>
+                                        <input type="email" placeholder="john.doe@gamil.com"
+                                               ng-model="model.user.email" class="form-control"/></div>
+                                    <div class="form-group">
+                                        <label class="control-label">First Name</label>
+                                        <input type="text" placeholder="John" class="form-control"
+                                               ng-model="model.user.firstName"/></div>
+                                    <div class="form-group">
+                                        <label class="control-label">Last Name</label>
+                                        <input type="text" placeholder="Doe" class="form-control"
+                                               ng-model="model.user.lastName"/></div>
+                                    <div class="form-group">
+                                        <label>Roles</label>
+                                        <div class="mt-checkbox-inline">
+                                            <label class="mt-checkbox">
+                                                <input ng-if="model.user.roles.indexOf('ADMIN') > -1" type="checkbox"
+                                                       id="isAdmin1"
+                                                       checked> Admin
+                                                <input ng-if="model.user.roles.indexOf('ADMIN') < 0" type="checkbox"
+                                                       id="isAdmin2"
+                                                       name="admin">
+                                                <span></span>
+                                            </label>
+                                            <label class="mt-checkbox">
+                                                <input type="checkbox" id="inlineCheckbox1" value="option1" disabled
+                                                       checked> User
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary"
+                                        ng-click="model.updateProfile(model.user)">Save changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

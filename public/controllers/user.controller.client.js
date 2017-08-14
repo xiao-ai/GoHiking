@@ -271,26 +271,12 @@
         }
     }
 
-    function UserController(UserService, $q, $http, $rootScope, $location, $window) {
+    function UserController(UserService, $q, $http, $rootScope, $location, $window, $scope) {
         var vm = this;
         vm.disableUser = disableUser;
-
-        // vm.currentUser = $rootScope.currentUser;
-        // checkAdmin();
-        // function checkAdmin() {
-        //     var deferred = $q.defer();
-        //
-        //     $http.get('/api/checkAdmin').then(function (res) {
-        //         var user = res.data;
-        //         if (user !== '0') {
-        //             $rootScope.currentUser = user;
-        //             deferred.resolve(user);
-        //         } else {
-        //             $location.url('/index');
-        //         }
-        //     });
-        //     return deferred.promise;
-        // }
+        vm.enableUser = enableUser;
+        vm.findUserById = findUserById;
+        vm.updateProfile = updateProfile;
 
         UserService
             .getAllUsers()
@@ -306,6 +292,53 @@
                         .getAllUsers()
                         .then(function (response) {
                             vm.users = response.data;
+                        });
+                });
+        }
+
+        function enableUser(userId) {
+            UserService
+                .updateUser(userId, {status: 'ACTIVE'})
+                .then(function () {
+                    UserService
+                        .getAllUsers()
+                        .then(function (response) {
+                            vm.users = response.data;
+                        });
+                });
+        }
+
+        function findUserById(userId) {
+            console.log(userId);
+            UserService
+                .findUserById(userId)
+                .then(function (response) {
+                    vm.user = response.data;
+                    $('#userModal').modal('show');
+                });
+        }
+
+        function updateProfile(user) {
+            var userId = user._id;
+            var user = {
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName
+            };
+            if($('#isAdmin1').is(':checked') || $('#isAdmin2').is(':checked')) {
+                user.roles = ['USER', 'ADMIN'];
+            } else {
+                user.roles = ['USER'];
+            }
+            console.log(user);
+            UserService
+                .updateUser(userId, user)
+                .then(function () {
+                    UserService
+                        .getAllUsers()
+                        .then(function (response) {
+                            vm.users = response.data;
+                            $('#userModal').modal('hide');
                         });
                 });
         }

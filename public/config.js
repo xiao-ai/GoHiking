@@ -100,10 +100,8 @@
 
     var checkAdmin = function ($q, $timeout, $http, $location, $rootScope) {
         var deferred = $q.defer();
-        console.log($rootScope.currentUser);
         $http.get('/api/checkAdmin').then(function (res) {
             var user = res.data;
-            console.log(user);
             if (user !== '0') {
                 $rootScope.currentUser = user;
                 deferred.resolve(user);
