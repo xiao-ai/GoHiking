@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Search trails near: </h3>
+            </div>
+            <div class="panel-body">
+                <form role="form">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" g-places-autocomplete ng-model="model.place"
+                                   placeholder="Place, city, state"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--<div class="panel panel-default">-->
+        <!--<div class="panel-heading">-->
+        <!--<h3 class="panel-title">Search trails by name: </h3>-->
+        <!--</div>-->
+        <!--<div class="panel-body">-->
+        <!--<form role="form">-->
+        <!--<div class="row">-->
+        <!--<div class="col-md-12">-->
+        <!--<div class="input-group">-->
+        <!--<input type="text" class="form-control" placeholder="Alki Beach Park"/>-->
+        <!--<span class="input-group-btn">-->
+        <!--<button class="btn blue" type="button">Search</button>-->
+        <!--</span>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</form>-->
+        <!--</div>-->
+        <!--</div>-->
+
+    </div>
+    <div class="col-sm-8">
+        <div ng-show="model.error" class="alert alert-danger">
+            <button class="close" data-close="alert"></button>
+            <span>{{model.error}}</span>
+        </div>
+        <div ng-show="model.addSuccess" class="alert alert-success">
+            <button class="close" data-close="alert"></button>
+            <span>{{model.addSuccess}}</span>
+        </div>
+        <div ng-show="model.removeSuccess" class="alert alert-success">
+            <button class="close" data-close="alert"></button>
+            <span>{{model.removeSuccess}}</span>
+        </div>
+        <div ng-repeat="trail in model.trails">
+            <div class="portlet mt-element-ribbon light portlet-fit">
+                <div ng-if="currentUser.favoriteTrails.indexOf(trail.id) > -1">
+                    <div style="cursor: pointer"
+                         class="ribbon ribbon-vertical-right ribbon-shadow ribbon-color-danger uppercase"
+                         title="remove from favorites"
+                         ng-click="model.removeFavoriteTrail(trail.id)">
+                        <div class="ribbon-sub ribbon-bookmark"></div>
+                        <i class="fa fa-heart"></i>
+                    </div>
+                </div>
+                <div class="portlet-title">
+                    <div class="caption font-green-sharp">
+                        <i class="icon-map font-green-sharp"></i>
+                        <a href="#!/trail/{{trail.id}}/lng/{{trail.longitude}}/lat/{{trail.latitude}}"
+                           class="caption-subject bold">{{trail.name}}</a>
+                    </div>
+                    <div class="tools"
+                         ng-if="currentUser.favoriteTrails.indexOf(trail.id) <= -1 || currentUser == null">
+                        <i ng-click="model.addFavoriteTrail(trail.id)" title="add to favorites"
+                           style="cursor: pointer; font-size: 18px" class="fa fa-heart-o"></i>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div ng-bind-html="model.trustThisContent(trail.description)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

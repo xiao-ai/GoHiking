@@ -3,11 +3,15 @@
     GoHiking.controller("GoHikingController", GoHikingController);
     GoHiking.run(Settings);
 
-    function GoHikingController($scope, $rootScope, $location) {
+    function GoHikingController($scope, $rootScope, $location, $window) {
         $scope.$on('$viewContentLoaded', function () {
             App.initComponents(); // init core components
-            $scope.currentPage = $location.path();
+            $rootScope.currentPage = $location.path();
         });
+
+        $rootScope.refresh = function() {
+            $window.location.reload();
+        };
     }
 
     /* Setup global settings */

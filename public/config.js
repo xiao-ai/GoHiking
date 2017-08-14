@@ -13,6 +13,11 @@
                 controller: "IndexController",
                 controllerAs: "model"
             })
+            .when('/trail', {
+                templateUrl: "views/trail/trail.html",
+                controller: "TrailController",
+                controllerAs: "model"
+            })
             .when('/login', {
                 templateUrl: "views/user/login.view.client.html",
                 controller: "LoginController",

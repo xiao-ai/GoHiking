@@ -48,6 +48,7 @@
     <!-- BEGIN PAGE LEVEL STYLES -->
     <link href="assets/pages/css/login.min.css" rel="stylesheet" type="text/css"/>
     <link href="assets/pages/css/profile.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/pages/css/about.min.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL STYLES -->
 
     <!-- BEGIN GO HIKING SCRIPTS -->
@@ -67,7 +68,11 @@
     <div ng-include="'views/user/user.view.template.html'"></div>
 </div>
 
-<div ng-if="currentPage !== '/login' && currentPage !== '/register'" class="page-wrapper">
+<div ng-if="currentPage == '/index'">
+    <div ng-include="'views/index/index.html'"></div>
+</div>
+
+<div ng-if="currentPage !== '/login' && currentPage !== '/register' && currentPage !== '/index'" class="page-wrapper">
     <div class="page-wrapper-row">
         <div class="page-wrapper-top">
             <div data-ng-include="'templates/header.html'" data-ng-controller="HeaderController"
@@ -164,11 +169,13 @@
 <!-- BEGIN CONTROLLERS -->
 <script src="controllers/index.controller.client.js" type="text/javascript"></script>
 <script src="controllers/user.controller.client.js" type="text/javascript"></script>
+<script src="controllers/trail.controller.client.js" type="text/javascript"></script>
 <!-- END CONTROLLERS -->
 
 <!-- BEGIN SERVICES -->
 <script src="services/index.service.client.js" type="text/javascript"></script>
 <script src="services/user.service.client.js" type="text/javascript"></script>
+<script src="services/trail.service.client.js" type="text/javascript"></script>
 <!-- END SERVICES -->
 <script>
     $(document).ready(function () {
