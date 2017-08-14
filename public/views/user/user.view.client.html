@@ -19,6 +19,7 @@
                         <th> Last Name</th>
                         <th> Email</th>
                         <th> Roles</th>
+                        <th> Status</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -43,12 +44,25 @@
 
                         </td>
                         <td>
-                            <a href="javascript:;" class="btn btn-outline btn-circle btn-sm purple">
-                                <i class="fa fa-edit"></i> Edit </a>
-                            <a ng-if="user.roles.indexOf('ADMIN') < 0"
+                            <span ng-if="user.status == 'ACTIVE'"
+                                  class="label label-xs label-success label-mini"> Active </span>
+                            <span ng-if="user.status == 'INACTIVE'"
+                                  class="label label-xs label-default label-mini"> Inactive </span>
+
+                        </td>
+                        <td>
+                            <!--<a href="javascript:;" class="btn btn-outline btn-circle btn-sm purple">-->
+                                <!--<i class="fa fa-edit"></i> Edit </a>-->
+                            <a ng-if="user.roles.indexOf('ADMIN') < 0 && user.status == 'ACTIVE'"
                                class="btn btn-outline btn-circle dark btn-sm black"
-                               ng-click="model.deleteUser(user._id)">
-                                <i class="fa fa-trash-o"></i> Delete </a>
+                               ng-click="model.disableUser(user._id)">
+                                <i class="fa fa-lock"></i> Disable </a>
+
+                            <a ng-if="user.roles.indexOf('ADMIN') < 0 && user.status == 'INACTIVE'"
+                               class="btn btn-outline btn-circle dark btn-sm black"
+                               ng-click="model.disableUser(user._id)"
+                               ng-click="model.enableUser(user._id)">
+                                <i class="fa fa-unlock"></i> Enable </a>
                         </td>
                     </tr>
                     <tr>

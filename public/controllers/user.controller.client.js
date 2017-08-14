@@ -28,8 +28,14 @@
                 .then(
                     function (response) {
                         if (response.data) {
-                            UserService.setCurrentUser(response.data);
-                            $location.url("/profile");
+                            var user = response.data;
+                            if (user.status == 'INACTIVE') {
+                                vm.error = "This user has been disabled";
+                                return;
+                            } else {
+                                UserService.setCurrentUser(response.data);
+                                $location.url("/profile");
+                            }
                         } else {
                             vm.error = "user does not exists!";
                         }
@@ -62,7 +68,8 @@
                 followers: [],
                 following: [],
                 favoriteTrails: [],
-                avatar: "../assets/layouts/layout3/img/avatar.png"
+                avatar: "../assets/layouts/layout3/img/avatar.png",
+                status: 'ACTIVE'
             };
 
             UserService
@@ -262,9 +269,26 @@
         }
     }
 
-    function UserController(UserService, $q, $http, $rootScope, $location, $route) {
+    function UserController(UserService, $q, $http, $rootScope, $location, $window) {
         var vm = this;
-        vm.deleteUser = deleteUser;
+        vm.disableUser = disableUser;
+
+        // vm.currentUser = $rootScope.currentUser;
+        // checkAdmin();
+        // function checkAdmin() {
+        //     var deferred = $q.defer();
+        //
+        //     $http.get('/api/checkAdmin').then(function (res) {
+        //         var user = res.data;
+        //         if (user !== '0') {
+        //             $rootScope.currentUser = user;
+        //             deferred.resolve(user);
+        //         } else {
+        //             $location.url('/index');
+        //         }
+        //     });
+        //     return deferred.promise;
+        // }
 
         UserService
             .getAllUsers()
@@ -272,9 +296,9 @@
                vm.users = response.data;
             });
 
-        function deleteUser(userId) {
+        function disableUser(userId) {
             UserService
-                .deleteUser(userId)
+                .updateUser(userId, {status: 'INACTIVE'})
                 .then(function () {
                     UserService
                         .getAllUsers()

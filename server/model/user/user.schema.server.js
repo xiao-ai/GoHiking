@@ -41,8 +41,12 @@ module.exports = function (mongoose) {
         },
         favoriteTrails: [{
             type: Number
-        }]
-
+        }],
+        status: {
+            type: String,
+            enum: ['INACTIVE', 'ACTIVE'],
+            default: 'ACTIVE'
+        }
     }, {collection: 'user'});
 
     return userSchema;

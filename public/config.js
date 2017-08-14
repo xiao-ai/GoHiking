@@ -37,25 +37,25 @@
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
                 controllerAs: "model",
-                resolve: {loggedin: checkLoggedin}
+                resolve: {currentUser: checkLoggedin}
             })
             .when('/search/:text', {
                 templateUrl: "views/user/search.view.client.html",
                 controller: "SearchUserController",
                 controllerAs: "model",
-                resolve: {loggedin: checkLoggedin}
+                resolve: {currentUser: checkLoggedin}
             })
             .when('/following', {
                 templateUrl: "views/user/search.view.client.html",
                 controller: "FollowingController",
                 controllerAs: "model",
-                resolve: {loggedin: checkLoggedin}
+                resolve: {currentUser: checkLoggedin}
             })
             .when('/followers', {
                 templateUrl: "views/user/search.view.client.html",
                 controller: "FollowersController",
                 controllerAs: "model",
-                resolve: {loggedin: checkLoggedin}
+                resolve: {currentUser: checkLoggedin}
             })
             .when('/trail/:trailId/lng/:lng/lat/:lat', {
                 templateUrl: "views/index/trail.view.client.html",
@@ -66,7 +66,7 @@
                 templateUrl: "views/user/user.view.client.html",
                 controller: "UserController",
                 controllerAs: "model",
-                resolve: {loggedin: checkAdmin}
+                resolve: {currentUser: checkAdmin}
             })
             .otherwise({
                 redirectTo: "/"
@@ -82,7 +82,6 @@
 
     var checkLoggedin = function ($q, $timeout, $http, $location, $rootScope, $window) {
         var deferred = $q.defer();
-
         $http.get('/api/loggedin').then(function (res) {
             var user = res.data;
             if (user !== '0') {
@@ -101,13 +100,15 @@
 
     var checkAdmin = function ($q, $timeout, $http, $location, $rootScope) {
         var deferred = $q.defer();
-
+        console.log($rootScope.currentUser);
         $http.get('/api/checkAdmin').then(function (res) {
             var user = res.data;
+            console.log(user);
             if (user !== '0') {
                 $rootScope.currentUser = user;
                 deferred.resolve(user);
             } else {
+                deferred.reject();
                 $location.url('/index');
             }
         });
