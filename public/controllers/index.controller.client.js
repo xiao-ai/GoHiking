@@ -24,7 +24,7 @@
         }
     }
 
-    function HeaderController($rootScope, $scope, $window) {
+    function HeaderController(UserService, $rootScope, $scope, $location) {
         $rootScope.logout = logout;
         $scope.$on('$includeContentLoaded', function () {
             Layout.initHeader(); // init header
@@ -35,7 +35,6 @@
                 .logout()
                 .then(function () {
                     $location.url('/index');
-                    $window.location.reload();
                 });
         }
     }

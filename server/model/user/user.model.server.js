@@ -19,7 +19,8 @@ module.exports = function (mongoose) {
         'findFollowingForUser': findFollowingForUser,
         'findFollowersForUser': findFollowersForUser,
         'addFavoriteTrail': addFavoriteTrail,
-        'removeFavoriteTrail': removeFavoriteTrail
+        'removeFavoriteTrail': removeFavoriteTrail,
+        'getAllUsers': getAllUsers
     };
 
     return api;
@@ -144,7 +145,7 @@ module.exports = function (mongoose) {
             .findById(userId)
             .populate('following')
             .then(function (user) {
-               return user.following;
+                return user.following;
             });
     }
 
@@ -175,4 +176,7 @@ module.exports = function (mongoose) {
             });
     }
 
+    function getAllUsers() {
+        return userModel.find();
+    }
 };

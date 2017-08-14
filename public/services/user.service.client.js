@@ -21,7 +21,8 @@
             "findFollowingForUser": findFollowingForUser,
             "findFollowersForUser": findFollowersForUser,
             "addFavoriteTrail": addFavoriteTrail,
-            "removeFavoriteTrail": removeFavoriteTrail
+            "removeFavoriteTrail": removeFavoriteTrail,
+            "getAllUsers": getAllUsers
         };
 
         return services;
@@ -107,6 +108,11 @@
         function removeFavoriteTrail(userId, trailId) {
             var url = "/api/user/" + userId + "/removeFavoriteTrail/" + trailId;
             return $http.put(url);
+        }
+
+        function getAllUsers() {
+            var url = "/api/getAllUsers";
+            return $http.get(url);
         }
 
     }

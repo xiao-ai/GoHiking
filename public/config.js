@@ -69,7 +69,7 @@
                 resolve: {loggedin: checkAdmin}
             })
             .otherwise({
-                redirectTo: "/index"
+                redirectTo: "/"
             });
 
         // allow youtube through
@@ -99,12 +99,13 @@
         return deferred.promise;
     };
 
-    var checkAdmin = function ($q, $timeout, $http, $location, $rootScope, $window) {
+    var checkAdmin = function ($q, $timeout, $http, $location, $rootScope) {
         var deferred = $q.defer();
 
         $http.get('/api/checkAdmin').then(function (res) {
             var user = res.data;
             if (user !== '0') {
+                $rootScope.currentUser = user;
                 deferred.resolve(user);
             } else {
                 $location.url('/index');

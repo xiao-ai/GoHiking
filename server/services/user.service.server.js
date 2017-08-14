@@ -26,6 +26,7 @@ module.exports = function (app, model) {
     app.get('/api/user/:userId/followers', findFollowersForUser);
     app.put('/api/user/:userId/addFavoriteTrail/:trailId', addFavoriteTrail);
     app.put('/api/user/:userId/removeFavoriteTrail/:trailId', removeFavoriteTrail);
+    app.get('/api/getAllUsers', getAllUsers);
 
     // Passport config
     app.post('/api/login', passport.authenticate('LocalStrategy'), login);
@@ -368,6 +369,15 @@ module.exports = function (app, model) {
             .removeFavoriteTrail(userId, trailId)
             .then(function (user) {
                 res.send(user);
+            });
+    }
+
+    function getAllUsers(req, res) {
+        model
+            .userModel
+            .getAllUsers()
+            .then(function (users) {
+               res.send(users);
             });
     }
 };

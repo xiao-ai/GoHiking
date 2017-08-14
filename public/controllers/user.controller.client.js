@@ -262,8 +262,26 @@
         }
     }
 
-    function UserController(UserService, $rootScope, $location, $route) {
+    function UserController(UserService, $q, $http, $rootScope, $location, $route) {
         var vm = this;
-        console.log("user managament");
+        vm.deleteUser = deleteUser;
+
+        UserService
+            .getAllUsers()
+            .then(function (response) {
+               vm.users = response.data;
+            });
+
+        function deleteUser(userId) {
+            UserService
+                .deleteUser(userId)
+                .then(function () {
+                    UserService
+                        .getAllUsers()
+                        .then(function (response) {
+                            vm.users = response.data;
+                        });
+                });
+        }
     }
 })();
