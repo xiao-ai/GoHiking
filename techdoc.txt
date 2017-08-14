@@ -1,0 +1,11 @@
+Database: 	MongoDB
+			mongoose
+Front-end: 	Bootstrap
+			Font-Awesome
+			Bootstrap Fileinput
+			Passport
+			Google Places Autocomplete
+			Google Login
+Front-end routing:
+			angular-route
+Third party API: https://www.transitandtrails.org/api#trailhead_object

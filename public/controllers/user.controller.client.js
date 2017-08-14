@@ -155,7 +155,7 @@
         }
     }
 
-    function SearchUserController($routeParams, $timeout, $location, UserService, $scope, $rootScope, $route) {
+    function SearchUserController($routeParams, $location, UserService, $rootScope, $route) {
         var vm = this;
         vm.search = search;
         vm.follow = follow;
@@ -173,7 +173,9 @@
             UserService
                 .fuzzySearch(text)
                 .then(function (response) {
-                    vm.users = response.data;
+                    vm.users = response.data.filter(function (user) {
+                        return user._id != $rootScope.currentUser._id;
+                    });
                     return;
                 });
         }
@@ -201,7 +203,7 @@
         }
     }
 
-    function FollowingController(UserService, $rootScope) {
+    function FollowingController(UserService, $rootScope, $location, $route) {
         var vm = this;
         var user = $rootScope.currentUser;
         vm.follow = follow;
