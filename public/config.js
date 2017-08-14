@@ -69,7 +69,7 @@
                 resolve: {currentUser: checkAdmin}
             })
             .otherwise({
-                redirectTo: "/"
+                redirectTo: "/index"
             });
 
         // allow youtube through
