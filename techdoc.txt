@@ -6,6 +6,7 @@ Front-end: 	Bootstrap
 			Passport
 			Google Places Autocomplete
 			Google Login
+			Google Maps
 Front-end routing:
 			angular-route
 Third party API: https://www.transitandtrails.org/api#trailhead_object

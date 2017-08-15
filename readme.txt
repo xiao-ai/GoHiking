@@ -51,7 +51,8 @@ redirect user to trails search page.
 
 User can type any places/cities/state to search the nearby trailheads. The search widget can autocomplete and predict
 what user might want to search, once user clicks the places, the trailheads near that location will show up on the
-right part of the website.
+right part of the website. And the locations of the trails will show up on the Google Maps. When click the markers on
+the Google Map, it will scroll to the corresponding trail.
 
 User can add the trail into his/her favorite trails by clicking the "heart" icon on the right side of the trail info
 box. Only when user if logged in can he/she add trails to his/her favorite list. If user are currently not logged in,
