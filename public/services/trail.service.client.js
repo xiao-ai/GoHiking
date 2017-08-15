@@ -8,12 +8,36 @@
 
     function TrailService($http) {
         var services = {
-            "searchTrailsNear": searchTrailsNear
+            "searchTrailsNear": searchTrailsNear,
+            "getTrailById": getTrailById,
+            "getTrailAttributes": getTrailAttributes,
+            "getTrailPhotos": getTrailPhotos,
+            "getTrailMaps": getTrailMaps
         };
         return services;
 
         function searchTrailsNear(lng, lat) {
             var url = trails_url + "trailheads?" + "distance=30&longitude=" + lng + "&latitude=" + lat + "&key=" + key;
+            return $http.get(url);
+        }
+
+        function getTrailById(trailId) {
+            var url = trails_url + "trailheads?id=" + trailId + "&key=" + key;
+            return $http.get(url);
+        }
+
+        function getTrailAttributes(trailId) {
+            var url = trails_url + "trailheads/" + trailId + "/attributes" + "?key=" + key;
+            return $http.get(url);
+        }
+
+        function getTrailPhotos(trailId) {
+            var url = trails_url + "trailheads/" + trailId + "/photos" + "?key=" + key;
+            return $http.get(url);
+        }
+
+        function getTrailMaps(trailId) {
+            var url = trails_url + "trailheads/" + trailId + "/maps" + "?key=" + key;
             return $http.get(url);
         }
     }

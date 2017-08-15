@@ -59,10 +59,7 @@
                 <div class="portlet-title">
                     <div class="caption font-green-sharp">
                         <i class="icon-map font-green-sharp"></i>
-                        <a
-                                class="caption-subject bold">{{trail.name}}</a>
-                        <!--<a href="#!/trail/{{trail.id}}/lng/{{trail.longitude}}/lat/{{trail.latitude}}"-->
-                        <!--class="caption-subject bold">{{trail.name}}</a>-->
+                        <a href="#!/trail/{{trail.id}}" class="caption-subject bold">{{trail.name}}</a>
                     </div>
                     <div class="tools"
                          ng-if="currentUser.favoriteTrails.indexOf(trail.id) <= -1 || currentUser == null">

@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="map" map-lazy-load="https://maps.google.com/maps/api/js">
+            <ng-map>
+                <marker position="{{model.position}}"></marker>
+            </ng-map>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-xs-6">
+        <div ng-show="model.error" class="alert alert-danger">
+            <button class="close" data-close="alert"></button>
+            <span>{{model.error}}</span>
+        </div>
+        <div ng-show="model.addSuccess" class="alert alert-success">
+            <button class="close" data-close="alert"></button>
+            <span>{{model.addSuccess}}</span>
+        </div>
+        <div ng-show="model.removeSuccess" class="alert alert-success">
+            <button class="close" data-close="alert"></button>
+            <span>{{model.removeSuccess}}</span>
+        </div>
+        <div class="portlet mt-element-ribbon light portlet-fit">
+            <div ng-if="currentUser.favoriteTrails.indexOf(model.trail.id) > -1">
+                <div style="cursor: pointer"
+                     class="ribbon ribbon-vertical-right ribbon-shadow ribbon-color-danger uppercase"
+                     title="remove from favorites"
+                     ng-click="model.removeFavoriteTrail(model.trail.id)">
+                    <div class="ribbon-sub ribbon-bookmark"></div>
+                    <i class="fa fa-heart"></i>
+                </div>
+            </div>
+            <div class="portlet-title">
+                <div class="caption font-green-sharp">
+                    <i class="icon-map font-green-sharp"></i>
+                    <a class="caption-subject bold">{{model.trail.name}}</a>
+                </div>
+                <div class="tools"
+                     ng-if="currentUser.favoriteTrails.indexOf(model.trail.id) <= -1 || currentUser == null">
+                    <i ng-click="model.addFavoriteTrail(model.trail.id)" title="add to favorites"
+                       style="cursor: pointer; font-size: 18px" class="fa fa-heart-o"></i>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div ng-bind-html="model.trustThisContent(model.trail.description)">
+                        </div>
+                        <hr>
+
+                        <div style="margin-bottom: 10px" ng-repeat="attr in model.attributes">
+                            <span class="label label-info"> {{attr.name}} </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <img class="thumbnail" width="100%" ng-repeat="p in model.photos" ng-src="{{p}}">
+    </div>
+</div>

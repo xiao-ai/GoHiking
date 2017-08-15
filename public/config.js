@@ -14,7 +14,7 @@
                 controllerAs: "model"
             })
             .when('/trail', {
-                templateUrl: "views/trail/trail.html",
+                templateUrl: "views/trail/trail.view.client.html",
                 controller: "TrailController",
                 controllerAs: "model"
             })
@@ -57,10 +57,11 @@
                 controllerAs: "model",
                 resolve: {currentUser: checkLoggedin}
             })
-            .when('/trail/:trailId/lng/:lng/lat/:lat', {
-                templateUrl: "views/index/trail.view.client.html",
-                controller: "TrailController",
-                controllerAs: "model"
+            .when('/trail/:trailId', {
+                templateUrl: "views/trail/trail.info.view.client.html",
+                controller: "TrailInfoController",
+                controllerAs: "model",
+                resolve: {currentUser: checkLoggedin}
             })
             .when('/user', {
                 templateUrl: "views/user/user.view.client.html",

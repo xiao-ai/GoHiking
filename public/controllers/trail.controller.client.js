@@ -1,7 +1,10 @@
 (function () {
     angular
         .module("GoHiking")
-        .controller("TrailController", TrailController);
+        .controller("TrailController", TrailController)
+        .controller("TrailInfoController", TrailInfoController);
+
+
 
     function TrailController($routeParams, TrailService, UserService, $rootScope,
                              $scope, $window, $sce, $location, $timeout, $q, $http, NgMap,
@@ -148,5 +151,115 @@
                 });
 
         }
+
+    }
+
+    function TrailInfoController($routeParams, TrailService, UserService, $rootScope,
+                                 $scope, $window, $sce, $location, $timeout, $q, $http, NgMap,
+                                 $anchorScroll) {
+        var vm = this;
+        var trailId = $routeParams.trailId;
+        vm.trustThisContent = trustThisContent;
+        vm.addFavoriteTrail = addFavoriteTrail;
+        vm.removeFavoriteTrail = removeFavoriteTrail;
+
+        TrailService
+            .getTrailById(trailId)
+            .then(function (response) {
+                vm.trail = response.data[0];
+                renderMaps();
+                console.log(vm.trail);
+            });
+
+        TrailService
+            .getTrailAttributes(trailId)
+            .then(function (response) {
+                vm.attributes = response.data;
+            });
+
+        TrailService
+            .getTrailPhotos(trailId)
+            .then(function (response) {
+                console.log(response.data);
+                var photos = [];
+
+                for (p in response.data) {
+                    photos.push(response.data[p].medium.replace("//", "https://"))
+                }
+
+                vm.photos = photos;
+            });
+
+        // TrailService
+        //     .getTrailMaps(trailId)
+        //     .then(function (response) {
+        //         vm.maps = response.data;
+        //     });
+
+        function renderMaps() {
+            NgMap.getMap().then(function(map) {
+                map.setCenter({lat: parseFloat(vm.trail.latitude), lng: parseFloat(vm.trail.longitude)});
+                vm.position = [parseFloat(vm.trail.latitude), parseFloat(vm.trail.longitude)];
+            });
+        }
+
+        function trustThisContent(html) {
+            return $sce.trustAsHtml(html);
+        }
+
+        function addFavoriteTrail(trailId) {
+            var user = $rootScope.currentUser;
+            console.log(user);
+            if (user == null || user == undefined) {
+                vm.error = "You need to login. Redirecting to login page in 3 seconds...";
+                $timeout(function () {
+                    $location.url('/login');
+                    return;
+                }, 2000);
+            } else {
+                UserService
+                    .addFavoriteTrail(user._id, trailId)
+                    .then(function (response) {
+                        $rootScope.currentUser = response.data;
+
+                        TrailService
+                            .searchTrailsNear(vm.lng, vm.lat)
+                            .then(function (response) {
+                                vm.addSuccess = "Added to favorites!";
+                                $timeout(function () {
+                                    vm.addSuccess = "";
+                                }, 2000);
+                                vm.trails = response.data.filter(function (trail) {
+                                    return trail.description != "";
+                                });
+                            });
+                    });
+            }
+        }
+
+        function removeFavoriteTrail(trailId) {
+            var user = $rootScope.currentUser;
+            console.log(user);
+            UserService
+                .removeFavoriteTrail(user._id, trailId)
+                .then(function (response) {
+                    $rootScope.currentUser = response.data;
+
+                    TrailService
+                        .searchTrailsNear(vm.lng, vm.lat)
+                        .then(function (response) {
+                            vm.removeSuccess = "Removed from favorites!";
+                            $timeout(function () {
+                                vm.removeSuccess = "";
+                            }, 2000);
+                            vm.trails = response.data.filter(function (trail) {
+                                return trail.description != "";
+                            });
+
+                        });
+                });
+
+        }
+
     }
 })();
