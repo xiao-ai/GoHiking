@@ -4,8 +4,6 @@
         .controller("TrailController", TrailController)
         .controller("TrailInfoController", TrailInfoController);
 
-
-
     function TrailController($routeParams, TrailService, UserService, $rootScope,
                              $scope, $window, $sce, $location, $timeout, $q, $http, NgMap,
                              $anchorScroll) {
@@ -163,12 +161,13 @@
         vm.addFavoriteTrail = addFavoriteTrail;
         vm.removeFavoriteTrail = removeFavoriteTrail;
 
+        checkLoggedin();
+
         TrailService
             .getTrailById(trailId)
             .then(function (response) {
                 vm.trail = response.data[0];
                 renderMaps();
-                console.log(vm.trail);
             });
 
         TrailService
@@ -180,13 +179,10 @@
         TrailService
             .getTrailPhotos(trailId)
             .then(function (response) {
-                console.log(response.data);
                 var photos = [];
-
                 for (p in response.data) {
                     photos.push(response.data[p].medium.replace("//", "https://"))
                 }
-
                 vm.photos = photos;
             });
 
@@ -195,6 +191,22 @@
         //     .then(function (response) {
         //         vm.maps = response.data;
         //     });
+
+        function checkLoggedin() {
+            var deferred = $q.defer();
+
+            $http.get('/api/loggedin').then(function (res) {
+                var user = res.data;
+                $rootScope.errorMessage = null;
+                if (user !== '0') {
+                    $rootScope.currentUser = user;
+                    deferred.resolve();
+                } else {
+                    return;
+                }
+            });
+            return deferred.promise;
+        }
 
         function renderMaps() {
             NgMap.getMap().then(function(map) {
@@ -209,7 +221,6 @@
 
         function addFavoriteTrail(trailId) {
             var user = $rootScope.currentUser;
-            console.log(user);
             if (user == null || user == undefined) {
                 vm.error = "You need to login. Redirecting to login page in 3 seconds...";
                 $timeout(function () {
@@ -239,7 +250,6 @@
 
         function removeFavoriteTrail(trailId) {
             var user = $rootScope.currentUser;
-            console.log(user);
             UserService
                 .removeFavoriteTrail(user._id, trailId)
                 .then(function (response) {

@@ -60,8 +60,7 @@
             .when('/trail/:trailId', {
                 templateUrl: "views/trail/trail.info.view.client.html",
                 controller: "TrailInfoController",
-                controllerAs: "model",
-                resolve: {currentUser: checkLoggedin}
+                controllerAs: "model"
             })
             .when('/user', {
                 templateUrl: "views/user/user.view.client.html",
