@@ -4,12 +4,14 @@
         .controller("TrailController", TrailController);
 
     function TrailController($routeParams, TrailService, UserService, $rootScope,
-                             $scope, $window, $sce, $location, $timeout, $q, $http, NgMap) {
+                             $scope, $window, $sce, $location, $timeout, $q, $http, NgMap,
+                             $anchorScroll) {
         var vm = this;
         $rootScope.logout = logout;
         vm.trustThisContent = trustThisContent;
         vm.addFavoriteTrail = addFavoriteTrail;
         vm.removeFavoriteTrail = removeFavoriteTrail;
+        vm.scrollTo = scrollTo;
 
         checkLoggedin();
 
@@ -56,16 +58,30 @@
                 // console.log(map.getCenter());
                 // console.log('markers', map.markers);
                 // console.log('shapes', map.shapes);
-                var positions = [];
+                var markers = [];
                 for (t in vm.trails) {
+                    var id = vm.trails[t].id;
                     var lat = parseFloat(vm.trails[t].latitude);
                     var lng = parseFloat(vm.trails[t].longitude);
-                    var p = [lat, lng];
-                    positions.push(p);
+                    var position = [lat, lng];
+                    var marker = {
+                      id: id,
+                      position: position
+                    };
+                    markers.push(marker);
                 }
-                vm.positions = positions;
+                vm.markers = markers;
             });
+        }
 
+        function scrollTo(e, marker) {
+            var id = 'marker_' + marker.id;
+
+            var old = $location.hash();
+            $location.hash(id);
+            $anchorScroll();
+            //reset to old to keep any additional routing logic from kicking in
+            $location.hash(old);
         }
 
         function trustThisContent(html) {
