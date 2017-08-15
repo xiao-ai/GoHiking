@@ -4,7 +4,7 @@
         .controller("TrailController", TrailController);
 
     function TrailController($routeParams, TrailService, UserService, $rootScope,
-                             $scope, $window, $sce, $location, $timeout, $q, $http) {
+                             $scope, $window, $sce, $location, $timeout, $q, $http, NgMap) {
         var vm = this;
         $rootScope.logout = logout;
         vm.trustThisContent = trustThisContent;
@@ -43,13 +43,30 @@
             TrailService
                 .searchTrailsNear(vm.lng, vm.lat)
                 .then(function (response) {
-
                     vm.trails = response.data.filter(function (trail) {
                         return trail.description != "";
                     });
-                    console.log(vm.trails);
+                    renderMaps();
                 });
         });
+
+        function renderMaps() {
+            NgMap.getMap().then(function(map) {
+                map.setCenter({lat: parseFloat(vm.lat), lng: parseFloat(vm.lng)});
+                // console.log(map.getCenter());
+                // console.log('markers', map.markers);
+                // console.log('shapes', map.shapes);
+                var positions = [];
+                for (t in vm.trails) {
+                    var lat = parseFloat(vm.trails[t].latitude);
+                    var lng = parseFloat(vm.trails[t].longitude);
+                    var p = [lat, lng];
+                    positions.push(p);
+                }
+                vm.positions = positions;
+            });
+
+        }
 
         function trustThisContent(html) {
             return $sce.trustAsHtml(html);
