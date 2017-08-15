@@ -58,6 +58,9 @@ User can add the trail into his/her favorite trails by clicking the "heart" icon
 box. Only when user if logged in can he/she add trails to his/her favorite list. If user are currently not logged in,
 then it will redirect user to login page.
 
+When click the trail name, it will go to the trail infomation page. User can review the trail location, trail photos
+and trail attributes in this page.
+
 
 *** User Profile
 Click the avatar on the up-right corner of the web page, then click "My Profile" in the dropdown list to go to the
