@@ -99,7 +99,7 @@ module.exports = function (mongoose) {
         return userModel.find({
             $or: [
                 {username: {$regex: text, $options: "i"}},
-                {fistName: {$regex: text, $options: "i"}},
+                {firstName: {$regex: text, $options: "i"}},
                 {lastName: {$regex: text, $options: "i"}},
                 {email: {$regex: text, $options: "i"}}
             ]
