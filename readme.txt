@@ -59,7 +59,7 @@ box. Only when user if logged in can he/she add trails to his/her favorite list.
 then it will redirect user to login page.
 
 When click the trail name, it will go to the trail infomation page. User can review the trail location, trail photos
-and trail attributes in this page.
+ trail attributes in this page. Besides, there is also weather forcast for the next following 5 days for user.
 
 
 *** User Profile

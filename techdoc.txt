@@ -1,5 +1,5 @@
 Database: 	MongoDB
-			mongoose
+			Mongoose
 Front-end: 	Bootstrap
 			Font-Awesome
 			Bootstrap Fileinput
@@ -9,4 +9,10 @@ Front-end: 	Bootstrap
 			Google Maps
 Front-end routing:
 			angular-route
-Third party API: https://www.transitandtrails.org/api#trailhead_object
+Node packages:
+            express
+            passport
+            express-session
+Third party API:
+            https://www.transitandtrails.org/api#trailhead_object
+            https://openweathermap.org/api
