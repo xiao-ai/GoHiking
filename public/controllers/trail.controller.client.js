@@ -54,7 +54,7 @@
         });
 
         function renderMaps() {
-            NgMap.getMap().then(function(map) {
+            NgMap.getMap().then(function (map) {
                 map.setCenter({lat: parseFloat(vm.lat), lng: parseFloat(vm.lng)});
                 // console.log(map.getCenter());
                 // console.log('markers', map.markers);
@@ -66,8 +66,8 @@
                     var lng = parseFloat(vm.trails[t].longitude);
                     var position = [lat, lng];
                     var marker = {
-                      id: id,
-                      position: position
+                        id: id,
+                        position: position
                     };
                     markers.push(marker);
                 }
@@ -168,6 +168,7 @@
             .then(function (response) {
                 vm.trail = response.data[0];
                 renderMaps();
+                renderWeather();
             });
 
         TrailService
@@ -186,11 +187,6 @@
                 vm.photos = photos;
             });
 
-        // TrailService
-        //     .getTrailMaps(trailId)
-        //     .then(function (response) {
-        //         vm.maps = response.data;
-        //     });
 
         function checkLoggedin() {
             var deferred = $q.defer();
@@ -209,10 +205,28 @@
         }
 
         function renderMaps() {
-            NgMap.getMap().then(function(map) {
+            NgMap.getMap().then(function (map) {
                 map.setCenter({lat: parseFloat(vm.trail.latitude), lng: parseFloat(vm.trail.longitude)});
                 vm.position = [parseFloat(vm.trail.latitude), parseFloat(vm.trail.longitude)];
             });
+        }
+
+        function renderWeather() {
+            var lat = vm.trail.latitude;
+            var lng = vm.trail.longitude;
+            TrailService
+                .getWeatherData(lat, lng)
+                .then(function (response) {
+                    var data = response.data.list;
+                    var weatherList = [];
+                    for (w in data) {
+                        if (w % 2 != 0) {
+                            weatherList.push(data[w]);
+                        }
+                    }
+                    vm.weatherList = weatherList;
+                });
+
         }
 
         function trustThisContent(html) {

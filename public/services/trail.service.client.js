@@ -3,6 +3,8 @@
         .module("GoHiking")
         .factory("TrailService", TrailService);
 
+    var weatherKey = "b012af5c98c960b4c44662551d3830bd";
+    var weatherUrl = "http://api.openweathermap.org/data/2.5/forecast?";
     var key = "e55af6a71db15349e0eff7663ed2dbfce8657bf6f82c836a36858e6e9ef90230";
     var trails_url = "https://api.transitandtrails.org/api/v1/";
 
@@ -12,7 +14,8 @@
             "getTrailById": getTrailById,
             "getTrailAttributes": getTrailAttributes,
             "getTrailPhotos": getTrailPhotos,
-            "getTrailMaps": getTrailMaps
+            "getTrailMaps": getTrailMaps,
+            "getWeatherData": getWeatherData
         };
         return services;
 
@@ -38,6 +41,11 @@
 
         function getTrailMaps(trailId) {
             var url = trails_url + "trailheads/" + trailId + "/maps" + "?key=" + key;
+            return $http.get(url);
+        }
+
+        function getWeatherData(lat, lng) {
+            var url = weatherUrl + "lat=" + lat + "&lon=" + lng + "&units=imperial" + "&appid=" + weatherKey;
             return $http.get(url);
         }
     }

@@ -57,6 +57,40 @@
                 </div>
             </div>
         </div>
+
+        <div class="portlet mt-element-ribbon light portlet-fit">
+
+            <div class="portlet-title">
+                <div class="caption font-green-sharp">
+                    <i class="fa fa-cloud font-green-sharp"></i>
+                    <a class="caption-subject bold">Weather of next 5 days</a>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div ng-repeat="w in model.weatherList" class="col-xs-4 thumbnail">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <img class="" ng-src="http://openweathermap.org/img/w/{{w.weather[0].icon}}.png">
+                            </div>
+                            <div class="col-xs-9" style="margin-top: 13px">
+                                {{w.weather[0].description}}
+                            </div>
+                        </div>
+                        <div class="row" style="text-align: center">
+                            <span>{{w.main.temp_min}} ~ {{w.main.temp_max}} °F</span>
+                        </div>
+                        <div class="row" style="text-align: center">
+                            <span>{{w.dt_txt}}</span>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-xs-6">
         <img class="thumbnail" width="100%" ng-repeat="p in model.photos" ng-src="{{p}}">
