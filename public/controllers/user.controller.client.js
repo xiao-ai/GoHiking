@@ -15,6 +15,7 @@
         vm.login = login;
 
         function login(username, password) {
+
             if (username === "" || username == undefined || password === "" || password === undefined) {
                 vm.error = "username and password are required!";
                 return;
@@ -39,9 +40,6 @@
                         } else {
                             vm.error = "user does not exists!";
                         }
-                    },
-                    function (error) {
-                        vm.error = "username and password does not match!";
                     });
         }
     }

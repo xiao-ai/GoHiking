@@ -16,7 +16,6 @@ var googleConfig = {
 module.exports = function (app, model) {
     app.get('/api/user', findUser);
     app.get('/api/user/:uid', findUserById);
-    app.post('/api/user', createUser);
     app.put('/api/user/:uid', updateUser);
     app.delete('/api/user/:uid', deleteUser);
     app.get('/api/user/fuzzySearch/:text', fuzzySearch);
@@ -31,7 +30,7 @@ module.exports = function (app, model) {
     // Passport config
     app.post('/api/login', passport.authenticate('LocalStrategy'), login);
     app.post('/api/logout', logout);
-    app.post('/api/register', regitser);
+    app.post('/api/register', register);
     app.get('/api/loggedin', loggedin);
     app.get('/api/checkAdmin', checkAdmin);
 
@@ -96,20 +95,21 @@ module.exports = function (app, model) {
     function localStrategy(username, password, done) {
         model
             .userModel
-            .findUserByCredentials(username, password)
+            .findUserByUsername(username)
             .then(function (user) {
-                if (user) {
-                    done(null, user);
+                if (user.username === username && bcrypt.compareSync(password, user.password)) {
+                    return done(null, user);
                 } else {
                     done(null, false);
                 }
-            }, function (error) {
-                done(error, false);
+            }, function (err) {
+                return done(err);
             });
     }
 
-    function regitser(req, res) {
+    function register(req, res) {
         var user = req.body;
+        user.password = bcrypt.hashSync(user.password);
 
         model
             .userModel
@@ -377,7 +377,7 @@ module.exports = function (app, model) {
             .userModel
             .getAllUsers()
             .then(function (users) {
-               res.send(users);
+                res.send(users);
             });
     }
 };

@@ -4,6 +4,7 @@ var app = express();
 var passport      = require('passport');
 var cookieParser  = require('cookie-parser');
 var session       = require('express-session');
+var bcrypt = require("bcrypt-nodejs");
 
 // install, load, and configure body parser module
 var bodyParser = require('body-parser');
