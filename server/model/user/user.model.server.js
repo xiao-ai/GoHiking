@@ -98,10 +98,10 @@ module.exports = function (mongoose) {
     function fuzzySearch(text) {
         return userModel.find({
             $or: [
-                {username: {$regex: text}},
-                {fistName: {$regex: text}},
-                {lastName: {$regex: text}},
-                {email: {$regex: text}}
+                {username: {$regex: text, $options: "i"}},
+                {fistName: {$regex: text, $options: "i"}},
+                {lastName: {$regex: text, $options: "i"}},
+                {email: {$regex: text, $options: "i"}}
             ]
         });
     }
