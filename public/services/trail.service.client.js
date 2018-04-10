@@ -25,23 +25,23 @@
     }
 
     function getTrailAttributes(trailId) {
-      var url = "/api/trail/attributes/" + trailId;
+      var url = "/api/trails/" + trailId + "/attributes";
       return $http.get(url);
     }
 
     function getTrailPhotos(trailId) {
-      var url = "/api/trail/photos/" + trailId;
+      var url = "/api/trails/photos/" + trailId;
       return $http.get(url);
     }
 
     function getTrailMaps(trailId) {
-      var url = "/api/trail/maps/" + trailId;
+      var url = "/api/trails/maps/" + trailId;
       return $http.get(url);
     }
 
     function getWeatherData(lat, lng) {
       // var url = weatherUrl + "lat=" + lat + "&lon=" + lng + "&units=imperial" + "&appid=" + weatherKey;
-      var url = "/api/trail/weather/" + lat + "/" + lng;
+      var url = "/api/trails/weather/" + lat + "/" + lng;
       return $http.get(url);
     }
   }
