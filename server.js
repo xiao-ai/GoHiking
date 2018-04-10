@@ -1,6 +1,7 @@
 //initialize app as an express application
 var express = require('express');
 var app = express();
+var cors = require('cors');
 var passport      = require('passport');
 var cookieParser  = require('cookie-parser');
 var session       = require('express-session');
@@ -10,6 +11,9 @@ var bcrypt = require("bcrypt-nodejs");
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+
+require('any-promise/register/q');
 
 app.use(session({
     secret: process.env.SESSION_SECRET || 'Bazinga',

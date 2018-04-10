@@ -23,4 +23,5 @@ module.exports = function(app){
 
     var models = require("./model/models.server.js")(mongoose);
     require("./services/user.service.server.js")(app, models);
+    require("./services/trail.service.server.js")(app, models);
 };
